@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para la persona más especial 💖</title>
+    <style>
+        :root {
+            --bg-color: #ffeef2;
+            --card-color: #ffffff;
+            --primary-color: #ff4d6d;
+            --text-color: #4a5568;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Animación de corazones de fondo */
+        .heart-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .heart-particle {
+            position: absolute;
+            color: var(--primary-color);
+            opacity: 0.3;
+            animation: float Up 6s infinite linear;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(100vh) scale(0); opacity: 0; }
+            50% { opacity: 0.5; }
+            100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
+        }
+
+        /* Contenedor Principal */
+        .container {
+            max-width: 500px;
+            width: 90%;
+            background: var(--card-color);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(255, 77, 109, 0.15);
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            color: var(--primary-color);
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .photo-placeholder {
+            width: 120px;
+            height: 120px;
+            background: #ffd6e0;
+            border-radius: 50%;
+            margin: 20px auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 3rem;
+            border: 4px solid var(--primary-color);
+        }
+
+        /* Contador de Tiempo */
+        .counter-box {
+            background: #fff0f3;
+            padding: 15px;
+            border-radius: 12px;
+            margin: 20px 0;
+            border: 1px dashed var(--primary-color);
+        }
+
+        .counter-title {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+            color: #ff758f;
+        }
+
+        .time-units {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        /* Mensaje Interactivo */
+        .btn-love {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1rem;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 77, 109, 0.4);
+        }
+
+        .btn-love:hover {
+            transform: scale(1.05);
+            background-color: #ff3355;
+        }
+
+        .hidden-message {
+            display: none;
+            margin-top: 20px;
+            font-style: italic;
+            line-height: 1.6;
+            animation: fadeIn 1s ease-in-out;
+            border-left: 3px solid var(--primary-color);
+            padding-left: 15px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="heart-bg" id="heartsContainer"></div>
+
+    <div class="container">
+        <div class="photo-placeholder">💝</div>
+        <h1>Para mi niña hermosa</h1>
+        <p>Hice esto para recordarte lo mucho que significas para mí. Eres mi persona favorita en el mundo entero. 🌍✨</p>
+
+        <div class="counter-box">
+            <div class="counter-title">Tiempo compartiendo sonrisas:</div>
+            <div id="counter" class="time-units">Cargando momentos inolvidables...</div>
+        </div>
+
+        <button class="btn-love" onclick="revealMessage()">Tengo una cosita más que decirte... Click aquí</button>
+        
+        <div class="hidden-message" id="loveLetter">
+            <p>Esto es un recordatorio de que no importan las dificultades o diferencias que tengamos, eres y seguiras siendo la mujer que quiero para mi vida, tienes mi amor incondicional y mi alma entera en tus manos</p>
+            <p>No importa el día que estés teniendo, espero que esto te saque una sonrisa. ¡Te amo con todo mi corazón! ❤️</p>
+        </div>
+    </div>
+
+    <script>
+        // --- 1. CONFIGURA TU FECHA AQUÍ (100% Compatible con iPhone y Android) ---
+        // 14 de Febrero de 2026 -> Año: 2026, Mes: 1 (Febrero), Día: 14, Hora: 0, Min: 0, Seg: 0
+        const fechaInicio = new Date(2026, 2, 14, 0, 0, 0); 
+
+        function actualizarContador() {
+            const ahora = new Date();
+            const diferencia = ahora - fechaInicio;
+
+            // Si por alguna razón la fecha actual es menor (por zonas horarias)
+            if (diferencia < 0) {
+                document.getElementById('counter').innerHTML = "¡Comenzó nuestro viaje! ❤️";
+                return;
+            }
+
+            const dias = Math.floor(diferencia / (1000 * 60 * 60 * 24));
+            const horas = Math.floor((diferencia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutos = Math.floor((diferencia % (1000 * 60 * 60)) / (1000 * 60));
+            const segundos = Math.floor((diferencia % (1000 * 60)) / 1000);
+
+            document.getElementById('counter').innerHTML = 
+                `${dias} días, ${horas}h, ${minutos}m y ${segundos}s`;
+        }
+        
+        // Ejecutar inmediatamente y luego cada segundo
+        actualizarContador();
+        setInterval(actualizarContador, 1000);
+
+        // --- 2. MOSTRAR CARTA (Corregido para Celulares) ---
+        function revealMessage() {
+            const letter = document.getElementById('loveLetter');
+            
+            // Hacemos visible la carta primero
+            letter.style.display = 'block';
+            
+            // Forzamos un pequeño retraso para que el teléfono procese el cambio y haga el scroll sin trabarse
+            setTimeout(() => {
+                window.scrollTo({
+                    top: letter.offsetTop + 100,
+                    behavior: 'smooth'
+                });
+            }, 100);
+        }
+
+        // --- 3. GENERADOR DE CORAZONES FLOTANTES ---
+        const heartsContainer = document.getElementById('heartsContainer');
+        const heartIcons = ['❤️', '💖', '💝', '💕', '🌸'];
+        
+        function createHeart() {
+            if (!heartsContainer) return;
+            const heart = document.createElement('div');
+            heart.classList.add('heart-particle');
+            heart.innerText = heartIcons[Math.floor(Math.random() * heartIcons.length)];
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 3 + 3) + 's';
+            heart.style.fontSize = (Math.random() * 15 + 15) + 'px';
+            
+            heartsContainer.appendChild(heart);
+            
+            setTimeout(() => {
+                heart.remove();
+            }, 6000);
+        }
+
+        setInterval(createHeart, 400);
+    </script>
+</body>
+</html>
